@@ -24,7 +24,6 @@ namespace Contacts
                 {
                     while (sr.Peek() >= 0)
                     {
-
                         string line = sr.ReadLine();
                         if (!line.Contains("<EOF>"))
                         {
