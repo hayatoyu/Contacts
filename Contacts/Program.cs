@@ -55,7 +55,8 @@ namespace Contacts
             // 開始查詢輸出
             while (true)
             {
-                Console.WriteLine("========== 請輸入數字以選擇查詢模式： ==========\n 1.依人名關鍵字\n 2.依單位關鍵字表列\n 3.離開程式");
+                Console.WriteLine("========== 請輸入數字以選擇查詢模式： ==========\n 1.依人名關鍵字\n 2.依單位關鍵字表列\n " +
+                    "3.特殊需求查詢\n 4.離開程式");
                 switch (Console.ReadLine())
                 {
                     case "1":
@@ -65,7 +66,6 @@ namespace Contacts
                         DisplayPeopleInfo(query1);
                         break;
                     case "2":
-
                         Console.WriteLine(" ===== 請輸入數字使用相關模式 =====\n 1.輸入單位關鍵字\n 2.表列所有單位清單再從中選擇");
                         string mode = Console.ReadLine();
                         switch (mode)
@@ -83,9 +83,16 @@ namespace Contacts
                         }
                         break;
                     case "3":
+                        var query2 = Contacts.Where(x => !string.IsNullOrEmpty(x.Note) && !x.Note.Equals("科長") && !x.Note.Equals("Boss"));
+                        DisplayPeopleInfo(query2);
+                        break;
+                    case "4":
                         Console.WriteLine(" ========== 感謝使用，歡迎再次光臨 ==========\n請按任意鍵繼續...");
                         Console.ReadKey();
                         System.Environment.Exit(0);
+                        break;
+                    case "cls":
+                        Console.Clear();
                         break;
                     default:
                         Console.WriteLine("========== 無效的指令，請再輸入一次 =========\n");
@@ -140,12 +147,19 @@ namespace Contacts
         {
             Console.WriteLine();
             StringBuilder stbr = new StringBuilder();
-            foreach (People p in query)
+            if (query.Count() == 0)
             {
-                stbr.Append(p.Name + "\t" + p.Extension + "\t" + p.Depart + "\t");
-                if (!string.IsNullOrEmpty(p.Note))
-                    stbr.Append(p.Note);
-                stbr.AppendLine();
+                stbr.AppendLine("=======查無資料！=======");
+            }
+            else
+            {
+                foreach (People p in query)
+                {
+                    stbr.Append(p.Name + "\t" + p.Extension + "\t" + p.Depart + "\t");
+                    if (!string.IsNullOrEmpty(p.Note))
+                        stbr.Append(p.Note);
+                    stbr.AppendLine();
+                }
             }
             Console.WriteLine(stbr.ToString());
         }
@@ -159,6 +173,7 @@ namespace Contacts
                 {
                     sr.Read();
                     CE = sr.CurrentEncoding;
+                    
                 }
             }
             catch
