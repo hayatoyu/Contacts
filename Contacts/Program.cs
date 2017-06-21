@@ -56,7 +56,7 @@ namespace Contacts
             while (true)
             {
                 Console.WriteLine("========== 請輸入數字以選擇查詢模式： ==========\n 1.依人名關鍵字\n 2.依單位關鍵字表列\n " +
-                    "3.特殊需求查詢\n 4.離開程式");
+                    "3.依分機號碼查詢\n 4.特殊需求查詢\n 5.離開程式");
                 switch (Console.ReadLine())
                 {
                     case "1":
@@ -83,10 +83,16 @@ namespace Contacts
                         }
                         break;
                     case "3":
-                        var query2 = Contacts.Where(x => !string.IsNullOrEmpty(x.Note) && !x.Note.Equals("科長") && !x.Note.Equals("Boss"));
+                        Console.WriteLine(" ===== 請輸入分機號碼 =====");
+                        string exten = Console.ReadLine();
+                        var query2 = Contacts.Where(x => x.Extension.Contains(exten));
                         DisplayPeopleInfo(query2);
                         break;
                     case "4":
+                        var query3 = Contacts.Where(x => !string.IsNullOrEmpty(x.Note) && !x.Note.Equals("科長") && !x.Note.Equals("Boss"));
+                        DisplayPeopleInfo(query3);
+                        break;
+                    case "5":
                         Console.WriteLine(" ========== 感謝使用，歡迎再次光臨 ==========\n請按任意鍵繼續...");
                         Console.ReadKey();
                         System.Environment.Exit(0);
