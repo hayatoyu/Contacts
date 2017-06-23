@@ -84,8 +84,10 @@ namespace Contacts
                         break;
                     case "3":
                         Console.WriteLine(" ===== 請輸入分機號碼 =====");
-                        string exten = Console.ReadLine();                        
-                        var query2 = Contacts.Where(x => x.Extension.StartsWith(exten));                  
+                        string exten = Console.ReadLine();
+                        
+                        var query2 = Contacts.Where(x => x.Extension.StartsWith(exten));
+                        
                         DisplayPeopleInfo(query2);
                         break;
                     case "4":
