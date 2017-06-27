@@ -12,51 +12,19 @@ namespace Contacts
         static void Main(string[] args)
         {
             List<People> Contacts = new List<People>();
-            string filepath = System.Environment.CurrentDirectory + @"\Contacts.csv";
+            
             // 先讀檔案中人員聯絡資料
             Console.WriteLine(" ========== 歡迎使用資訊處通訊錄查詢系統 ==========");
             Console.WriteLine("讀取人員資料中...");
             Console.WriteLine();
-            try
-            {
-                using (StreamReader sr = new StreamReader(filepath, EncodingDetection(filepath)))
-                {
-                    while (sr.Peek() >= 0)
-                    {
-                        string line = sr.ReadLine();
-                        if (!line.Contains("<EOF>"))
-                        {
-                            line = line.TrimEnd().Replace("\t", ",");
-                            string[] contact = line.Split(',');
-                            Contacts.Add(
-                                new People
-                                {
-                                    Name = contact[0],
-                                    Extension = contact[1],
-                                    Depart = contact[2],
-                                    Note = contact.Length > 3 ? contact[3] : string.Empty
-                                }
-                                );
-                        }
-                        else
-                            break;
-                    }
-                }
-                Console.WriteLine("========== 讀取完成，請參考說明使用 ==========\n");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                Console.WriteLine(" ===== 發生錯誤，程式即將關閉 =====\n請按任意鍵繼續...");
-                Console.ReadKey();
-                System.Environment.Exit(1);
-            }
+
+            Contacts = GetContact();
 
             // 開始查詢輸出
             while (true)
             {
                 Console.WriteLine("========== 請輸入數字以選擇查詢模式： ==========\n 1.依人名關鍵字\n 2.依單位關鍵字表列\n " +
-                    "3.依分機號碼查詢\n 4.特殊需求查詢\n 5.離開程式");
+                    "3.依分機號碼查詢\n 4.特殊需求查詢\n 5.重新取得分機表\n 6.離開程式");
                 switch (Console.ReadLine())
                 {
                     case "1":
@@ -93,6 +61,11 @@ namespace Contacts
                         DisplayPeopleInfo(query3);
                         break;
                     case "5":
+                        Contacts.Clear();
+                        Console.WriteLine(" ========== 正在重新取得分機表 ==========");
+                        Contacts = GetContact();
+                        break;
+                    case "6":
                         Console.WriteLine(" ========== 感謝使用，歡迎再次光臨 ==========\n請按任意鍵繼續...");
                         Console.ReadKey();
                         System.Environment.Exit(0);
@@ -189,6 +162,47 @@ namespace Contacts
 
             return CE;
 
+        }
+
+        public static List<People> GetContact()
+        {
+            List<People> Contacts = new List<People>();
+            string filepath = System.Environment.CurrentDirectory + @"\Contacts.csv";
+            try
+            {
+                using (StreamReader sr = new StreamReader(filepath, EncodingDetection(filepath)))
+                {
+                    while (sr.Peek() >= 0)
+                    {
+                        string line = sr.ReadLine();
+                        if (!line.Contains("<EOF>"))
+                        {
+                            line = line.TrimEnd().Replace("\t", ",");
+                            string[] contact = line.Split(',');
+                            Contacts.Add(
+                                new People
+                                {
+                                    Name = contact[0],
+                                    Extension = contact[1],
+                                    Depart = contact[2],
+                                    Note = contact.Length > 3 ? contact[3] : string.Empty
+                                }
+                                );
+                        }
+                        else
+                            break;
+                    }
+                }
+                Console.WriteLine("========== 讀取完成，請參考說明使用 ==========\n");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine(" ===== 發生錯誤，程式即將關閉 =====\n請按任意鍵繼續...");
+                Console.ReadKey();
+                System.Environment.Exit(1);
+            }
+            return Contacts;
         }
     }
 }
