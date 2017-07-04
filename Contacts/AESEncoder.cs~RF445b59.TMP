@@ -1,0 +1,65 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using System.Security.Cryptography;
+
+
+namespace Contacts
+{
+    class AESEncoder
+    {
+        public static string AESEncryptBase64(string origin)
+        {
+            string result = string.Empty;
+            if(!string.IsNullOrEmpty(origin))
+            {
+                AesCryptoServiceProvider aes = new AesCryptoServiceProvider();
+                //byte[] Key = Encoding.ASCII.GetBytes("這是Key你能怎樣哈哈");
+                //byte[] IV = Encoding.ASCII.GetBytes("這是IV你能怎樣哈哈");
+                byte[] dataByteArray = Encoding.UTF8.GetBytes(origin);
+
+                //aes.Key = Key;
+                //aes.IV = IV;
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    using (CryptoStream cs = new CryptoStream(ms, aes.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cs.Write(dataByteArray, 0, dataByteArray.Length);
+                        cs.FlushFinalBlock();
+                        result = Convert.ToBase64String(ms.ToArray());
+                    }
+                }
+            }
+            return result;
+        }
+
+        public static string AESDecrptBase64(string input)
+        {
+            string origin = string.Empty;
+
+            AesCryptoServiceProvider aes = new AesCryptoServiceProvider();
+            //byte[] Key = Encoding.ASCII.GetBytes("這是Key你能怎樣哈哈");
+            //byte[] IV = Encoding.ASCII.GetBytes("這是IV你能怎樣哈哈");
+
+            //aes.Key = Key;
+            //aes.IV = IV;
+
+            byte[] dataByteArray = Convert.FromBase64String(input);
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(), CryptoStreamMode.Write))
+                {
+                    cs.Write(dataByteArray, 0, dataByteArray.Length);
+                    cs.FlushFinalBlock();
+                    origin = Encoding.UTF8.GetString(ms.ToArray());
+                }
+            }
+
+                return origin;
+        }
+    }
+}

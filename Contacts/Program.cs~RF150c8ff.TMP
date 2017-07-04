@@ -22,6 +22,14 @@ namespace Contacts
 
             Contacts = GetContact();
 
+            // 測試
+            //string test = "test";
+            //string encrpted = AESEncoder.AESEncryptBase64(test);
+            //string decrypted = AESEncoder.AESDecrptBase64(encrpted);
+            //Console.WriteLine(encrpted);
+            //Console.WriteLine(decrypted);
+
+
             // 開始查詢輸出
             while (true)
             {
@@ -91,8 +99,7 @@ namespace Contacts
             {
                 int departNo;
                 var query = (from people in Contacts
-                             group people by people.Depart
-                             ).OrderByDescending(p => p.Key).ToList();
+                             group people by people.Depart).ToList();
                 Console.WriteLine();
                 for (int i = 0; i < query.Count; i += 2)
                 {
@@ -179,7 +186,6 @@ namespace Contacts
             // local csv file
             if (DataSource.Equals("1"))
             {
-                Console.WriteLine("========== 正在讀取本地 csv 文件 ==========");
                 string filepath = System.Environment.CurrentDirectory + @"\Contacts.csv";
                 try
                 {
@@ -220,38 +226,26 @@ namespace Contacts
             // DB
             else if (DataSource.Equals("2"))
             {
-                try
+                string ConnString = ConfigurationManager.AppSettings["ConnStrings"];
+                using (SqlConnection conn = new SqlConnection())
                 {
-                    Console.WriteLine("========== 正在讀取資料庫 ==========");
-                    string ConnString = ConfigurationManager.AppSettings["ConnStrings"];
-                    using (SqlConnection conn = new SqlConnection())
+                    conn.ConnectionString = ConnString;
+                    conn.Open();
+                    string query = "select * from T_Extension";
+                    SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
+                    DataSet ds = new DataSet();
+                    adapter.Fill(ds);
+                    foreach (DataRow row in ds.Tables[0].Rows)
                     {
-                        conn.ConnectionString = ConnString;
-                        conn.Open();
-                        string query = "select * from T_Extension";
-                        SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-                        DataSet ds = new DataSet();
-                        adapter.Fill(ds);
-                        foreach (DataRow row in ds.Tables[0].Rows)
+                        Contacts.Add(new People
                         {
-                            Contacts.Add(new People
-                            {
-                                Name = row["Name"].ToString(),
-                                Extension = row["Extension"].ToString(),
-                                Depart = row["Depart"].ToString(),
-                                SpecialSys = row["SpecialSys"] == null ? string.Empty : row["SpecialSys"].ToString(),
-                                Note = row["Notes"] == null ? string.Empty : row["Notes"].ToString()
-                            });
-                        }
+                            Name = row["Name"].ToString(),
+                            Extension = row["Extension"].ToString(),
+                            Depart = row["Depart"].ToString(),
+                            SpecialSys = row["SpecialSys"] == null ? string.Empty : row["SpecialSys"].ToString(),
+                            Note = row["Notes"] == null ? string.Empty : row["Notes"].ToString()
+                        });
                     }
-                    Console.WriteLine("========== 讀取完成，請參考說明使用 ==========\n");
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    Console.WriteLine(" ===== 發生錯誤，程式即將關閉 =====\n請按任意鍵繼續...");
-                    Console.ReadKey();
-                    System.Environment.Exit(1);
                 }
             }
             return Contacts;
