@@ -15,6 +15,15 @@ namespace Contacts
         {
             List<People> Contacts = new List<People>();
 
+            // AES Test
+            //string PlainText = ConfigurationManager.AppSettings["PlainText"];
+            //string Encrypted = ConfigurationManager.AppSettings["Encrypted"];
+            //Console.WriteLine("PlainText : " + PlainText);
+            //Console.WriteLine("Encrypted : " + AESEncoder.AESEncryptBase64(PlainText));
+            //Console.WriteLine("Encrypted : " + Encrypted);
+            //Console.WriteLine("Decrypted : " + AESEncoder.AESDecrptBase64(Encrypted));
+            
+
             // 先讀檔案中人員聯絡資料
             Console.WriteLine(" ========== 歡迎使用資訊處通訊錄查詢系統 ==========");
             Console.WriteLine("讀取人員資料中...");
@@ -224,8 +233,11 @@ namespace Contacts
                 {
                     Console.WriteLine("========== 正在讀取資料庫 ==========");
                     string ConnString = ConfigurationManager.AppSettings["ConnStrings"];
+                    string UserID = ConfigurationManager.AppSettings["UserID"];
+                    string Password = ConfigurationManager.AppSettings["Password"];
                     using (SqlConnection conn = new SqlConnection())
                     {
+                        ConnString = ConnString.Replace("usrid", AESEncoder.AESDecrptBase64(UserID)).Replace("pswd", AESEncoder.AESDecrptBase64(Password));
                         conn.ConnectionString = ConnString;
                         conn.Open();
                         string query = "select * from T_Extension";
