@@ -3,3 +3,4 @@ C:\Users\51942\documents\visual studio 2017\Projects\Contacts\Contacts\bin\Debug
 C:\Users\51942\documents\visual studio 2017\Projects\Contacts\Contacts\bin\Debug\Contacts.pdb
 C:\Users\51942\documents\visual studio 2017\Projects\Contacts\Contacts\obj\Debug\Contacts.exe
 C:\Users\51942\documents\visual studio 2017\Projects\Contacts\Contacts\obj\Debug\Contacts.pdb
+C:\Users\51942\documents\visual studio 2017\Projects\Contacts\Contacts\obj\Debug\Contacts.csprojResolveAssemblyReference.cache

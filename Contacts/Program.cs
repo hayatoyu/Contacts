@@ -144,6 +144,7 @@ namespace Contacts
 
         public static void DisplayPeopleInfo(IEnumerable<People> query)
         {
+            Console.Clear();
             Console.WriteLine();
             StringBuilder stbr = new StringBuilder();
             if (query.Count() == 0)
