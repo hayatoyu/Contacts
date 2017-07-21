@@ -14,15 +14,5 @@ namespace Contacts
         public string SpecialSys { get; set; }
         public string Note { get; set; }
 
-        public void NoteToSpecialSys()
-        {
-            if(!string.IsNullOrEmpty(Note) && !Note.Equals("科長") 
-                && !Note.Equals("Boss") 
-                && !Note.Equals("處長") 
-                && !Note.Equals("工讀生"))
-            {
-                SpecialSys = Note;
-            }
-        }
     }
 }
