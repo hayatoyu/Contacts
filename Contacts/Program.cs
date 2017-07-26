@@ -68,7 +68,6 @@ namespace Contacts
                         DisplayPeopleInfo(query2);
                         break;
                     case "4":
-
                         var query3 = Contacts.Where(x => !string.IsNullOrEmpty(x.SpecialSys));
                         DisplayPeopleInfo(query3);
                         break;
@@ -175,16 +174,13 @@ namespace Contacts
                 {
                     sr.Read();
                     CE = sr.CurrentEncoding;
-
                 }
             }
-            catch
+            catch(Exception e)
             {
-                throw;
+                Console.WriteLine(e.Message);
             }
-
             return CE;
-
         }
 
         public static List<People> GetContact()
