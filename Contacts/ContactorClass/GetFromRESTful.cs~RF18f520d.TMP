@@ -1,0 +1,50 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Net;
+using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+
+namespace Contacts.ContactorClass
+{
+    class GetFromRESTful : ContactGetter
+    {
+        public List<People> GetContact()
+        {
+            List<People> Contacts = new List<People>();
+            string url = "http://10.10.5.64:9999/HyperledgerFabric/RestfulTestServiceImpl.svc/Contact";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "POST";
+            using (StreamWriter sw = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                sw.Write(string.Empty);
+                sw.Flush();
+                sw.Close();
+            }
+
+            var httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (StreamReader sr = new StreamReader(httpWebResponse.GetResponseStream()))
+            {
+                dynamic obj = JsonConvert.DeserializeObject<GetContactResult>(sr.ReadToEnd());
+                Contacts = obj.result.list;
+            }
+            return Contacts;
+        }
+    }
+    
+    class RESTFulResult
+    {
+        public GetContactResult result { get; set; }
+    }
+
+    class GetContactResult
+    {
+        public People[] list { get; set; }
+        public string errMsg { get; set; }
+    }
+}

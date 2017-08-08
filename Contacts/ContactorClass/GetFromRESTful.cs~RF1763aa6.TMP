@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Contacts.ContactorClass
+{
+    class GetFromRESTful : ContactGetter
+    {
+        public List<People> GetContact()
+        {
+            List<People> Contacts = new List<People>();
+            string url = "http://10.10.5.64:9999/HyperledgerFabric/RestfulTestServiceImpl.svc/Contact";
+
+            return Contacts;
+        }
+    }
+}

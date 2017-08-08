@@ -1,0 +1,30 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Net;
+using System.IO;
+
+namespace Contacts.ContactorClass
+{
+    class GetFromRESTful : ContactGetter
+    {
+        public List<People> GetContact()
+        {
+            List<People> Contacts = new List<People>();
+            string url = "http://10.10.5.64:9999/HyperledgerFabric/RestfulTestServiceImpl.svc/Contact";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "POST";
+            using (StreamWriter sw = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                sw.Write(string.Empty);
+                sw.Flush();
+                sw.Close();
+            }
+            return Contacts;
+        }
+    }
+    
+}
