@@ -17,7 +17,8 @@ namespace Contacts
     {
         static void Main(string[] args)
         {
-            Contactor contactor = new Contactor(ConfigurationManager.AppSettings["DataSource"]);
+            string DataSource = ConfigurationManager.AppSettings["DataSource"];
+            Contactor contactor = new Contactor(DataSource);
             
             // AES Test
             //string PlainText = ConfigurationManager.AppSettings["PlainText"];
@@ -45,7 +46,7 @@ namespace Contacts
                     case "1":
                         Console.WriteLine(" ===== 請輸入人名關鍵字 =====");
                         string name = Console.ReadLine();
-                        var query1 = Contacts.Where(p => p.Name.Contains(name)).OrderBy(p => p.Depart).ThenByDescending(p => p.Note);
+                        var query1 = Contacts.Where(p => p.Name.ToLower().Contains(name) || p.Name.ToUpper().Contains(name)).OrderBy(p => p.Depart).ThenByDescending(p => p.Note);
                         DisplayPeopleInfo(query1);
                         break;
                     case "2":
