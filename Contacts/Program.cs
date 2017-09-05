@@ -19,22 +19,23 @@ namespace Contacts
         {
             string DataSource = ConfigurationManager.AppSettings["DataSource"];
             Contactor contactor = new Contactor(DataSource);
-            
+
             // AES Test
             //string PlainText = ConfigurationManager.AppSettings["PlainText"];
-            //string Encrypted = ConfigurationManager.AppSettings["Encrypted"];
+            //string Encrypted = ConfigurationManager.AppSettings["Encrypted"];            
             //Console.WriteLine("PlainText : " + PlainText);
             //Console.WriteLine("Encrypted : " + AESEncoder.AESEncryptBase64(PlainText));
             //Console.WriteLine("Encrypted : " + Encrypted);
             //Console.WriteLine("Decrypted : " + AESEncoder.AESDecrptBase64(Encrypted));
+            //Console.WriteLine(AESEncoder.AESEncryptBase64("n21Dq435t9S1"));
             
 
             // 先讀檔案中人員聯絡資料
-            Console.WriteLine(" ========== 歡迎使用資訊處通訊錄查詢系統 ==========");
-            //Console.WriteLine("讀取人員資料中...");
+            Console.WriteLine(" ========== 歡迎使用資訊處通訊錄查詢系統 ==========");           
             Console.WriteLine();
 
             List<People> Contacts = contactor.GetContact();
+            
 
             // 開始查詢輸出
             while (true)
@@ -46,8 +47,8 @@ namespace Contacts
                     case "1":
                         Console.WriteLine(" ===== 請輸入人名關鍵字 =====");
                         string name = Console.ReadLine();
-                        var query1 = Contacts.Where(p => p.Name.ToLower().Contains(name) || p.Name.ToUpper().Contains(name)).OrderBy(p => p.Depart).ThenByDescending(p => p.Note);
-                        DisplayPeopleInfo(query1);
+                        var query1 = Contacts.Where(p => p.Name.ToLower().Contains(name) || p.Name.ToUpper().Contains(name)).OrderBy(p => p.Depart).ThenByDescending(p => p.Notes);
+                        contactor.DisplayPeopleInfo(query1);
                         break;
                     case "2":
                         Console.WriteLine(" ===== 請輸入數字使用相關模式 =====\n 1.輸入單位關鍵字\n 2.表列所有單位清單再從中選擇");
@@ -57,10 +58,10 @@ namespace Contacts
                             case "1":
                                 Console.WriteLine(" ===== 請輸入單位關鍵字 =====");
                                 string depart = Console.ReadLine();
-                                DisplayDeparts(Contacts, depart);
+                                contactor.DisplayDeparts(Contacts, depart);
                                 break;
                             case "2":
-                                DisplayDeparts(Contacts);
+                                contactor.DisplayDeparts(Contacts);
                                 break;
                             default:
                                 break;
@@ -70,11 +71,11 @@ namespace Contacts
                         Console.WriteLine(" ===== 請輸入分機號碼 =====");
                         string exten = Console.ReadLine();
                         var query2 = Contacts.Where(x => x.Extension.StartsWith(exten));
-                        DisplayPeopleInfo(query2);
+                        contactor.DisplayPeopleInfo(query2);
                         break;
                     case "4":
                         var query3 = Contacts.Where(x => !string.IsNullOrEmpty(x.SpecialSys));
-                        DisplayPeopleInfo(query3);
+                        contactor.DisplayPeopleInfo(query3);
                         break;
                     case "5":
                         Contacts.Clear();
@@ -102,74 +103,6 @@ namespace Contacts
                 }
             }
         }
-
-        public static void DisplayDeparts(List<People> Contacts, string depart = "")
-        {
-            StringBuilder stbr = new StringBuilder();
-            // 全表列
-            if (string.IsNullOrEmpty(depart))
-            {
-                int departNo;
-                var query = (from people in Contacts
-                             group people by people.Depart
-                             ).OrderByDescending(p => p.Key).ToList();
-                Console.WriteLine();
-                for (int i = 0; i < query.Count; i += 2)
-                {
-                    stbr.Append((i + 1).ToString() + "." + query[i].Key + "\t");
-                    if (i + 1 < query.Count)
-                        stbr.Append((i + 2).ToString() + "." + query[i + 1].Key + "\t");
-                    stbr.AppendLine();
-                }
-                Console.WriteLine(stbr.ToString() + "\n");
-                Console.WriteLine(" ===== 請輸入數字以選擇單位 =====");
-                depart = Console.ReadLine();
-                if (int.TryParse(depart, out departNo))
-                {
-                    if (departNo > 0 && departNo < query.Count + 1)
-                    {
-                        depart = query[departNo - 1].Key;
-                        DisplayDeparts(Contacts, depart);
-                        Console.WriteLine();
-                    }
-                    return;
-                }
-                Console.WriteLine(" ===== 無效的單位代號 =====\n\n");
-
-            }
-            // 依關鍵字表列
-            else
-            {
-                var query = Contacts.Where(p => p.Depart.Contains(depart)).OrderBy(p => p.Depart).ThenByDescending(p => p.Note);
-                Console.WriteLine();
-                DisplayPeopleInfo(query);
-            }
-        }
-
-        public static void DisplayPeopleInfo(IEnumerable<People> query)
-        {
-            Console.Clear();
-            Console.WriteLine();
-            StringBuilder stbr = new StringBuilder();
-            if (query.Count() == 0)
-            {
-                stbr.AppendLine("=======查無資料！=======");
-            }
-            else
-            {
-                foreach (People p in query)
-                {
-                    stbr.Append(p.Name + "\t" + p.Extension + "\t" + p.Depart + "\t");
-                    if (!string.IsNullOrEmpty(p.SpecialSys))
-                        stbr.Append(p.SpecialSys + "\t");
-                    if (!string.IsNullOrEmpty(p.Note))
-                        stbr.Append(p.Note);
-                    stbr.AppendLine();
-                }
-            }
-            Console.WriteLine(stbr.ToString());
-        }
-
-
+        
     }
 }

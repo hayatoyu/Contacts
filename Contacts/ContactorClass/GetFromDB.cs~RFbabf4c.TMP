@@ -15,7 +15,7 @@ namespace Contacts.ContactorClass
         {
             string DataSource = ConfigurationManager.AppSettings["DataSource"];
             List<People> Contacts = new List<People>();
-            
+            List<P_Status> P_Statuses = new List<P_Status>();
             try
             {
                 Console.WriteLine("========== 正在讀取資料庫 ==========");
@@ -44,7 +44,17 @@ namespace Contacts.ContactorClass
                             SpecialSys = row["SpecialSys"] == null ? string.Empty : row["SpecialSys"].ToString(),
                             Notes = row["Notes"] == null ? string.Empty : row["Notes"].ToString()
                         });
-                    }                    
+                    }
+
+                    // 查詢狀態資料
+                    ds.Clear();
+                    ds = new DataSet();
+                    query = "select * from V_TodayStatus";
+                    adapter.Fill(ds);
+                    foreach(DataRow row in ds.Tables[0].Rows)
+                    {
+                        P_Statuses.Add(new P_Status(row));
+                    }
                 }
                 Console.WriteLine("========== 讀取完成，請參考說明使用 ==========\n");
             }
@@ -63,7 +73,6 @@ namespace Contacts.ContactorClass
             string ConnString = ConfigurationManager.AppSettings["ConnStrings"];
             string UserID = ConfigurationManager.AppSettings["UserID"];
             string Password = ConfigurationManager.AppSettings["Password"];
-            List<P_Status> P_Statuses = new List<P_Status>();
 
             using (SqlConnection conn = new SqlConnection())
             {
@@ -71,18 +80,34 @@ namespace Contacts.ContactorClass
                 conn.ConnectionString = ConnString;
                 conn.Open();
 
+                // 查詢人員資料
+                string query = "select * from T_Extension";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
+                DataSet ds = new DataSet();
+                adapter.Fill(ds);
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    Contacts.Add(new People
+                    {
+                        ID = (int)row["ID"],
+                        Name = row["Name"].ToString(),
+                        Extension = row["Extension"].ToString(),
+                        Depart = row["Depart"].ToString(),
+                        SpecialSys = row["SpecialSys"] == null ? string.Empty : row["SpecialSys"].ToString(),
+                        Notes = row["Notes"] == null ? string.Empty : row["Notes"].ToString()
+                    });
+                }
 
                 // 查詢狀態資料
-                DataSet ds = new DataSet();
-                string query = "select * from V_TodayStatus";
-                SqlDataAdapter adapter = new SqlDataAdapter(query,conn);
+                ds.Clear();
+                ds = new DataSet();
+                query = "select * from V_TodayStatus";
                 adapter.Fill(ds);
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
                     P_Statuses.Add(new P_Status(row));
                 }
             }
-            return P_Statuses;
         }
     }
 }

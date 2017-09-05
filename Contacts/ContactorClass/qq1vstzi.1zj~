@@ -66,7 +66,8 @@ namespace Contacts.ContactorClass
                 using (StreamReader sr = new StreamReader(httpWebResponse.GetResponseStream()))
                 {
                     var obj = JsonConvert.DeserializeObject<GetStatuses>(sr.ReadToEnd());
-                    P_Statuses = obj.Statuses.ToList();
+                    if(obj != null)
+                        P_Statuses = obj.Statuses.ToList();
                 }
             }
             catch(Exception e)

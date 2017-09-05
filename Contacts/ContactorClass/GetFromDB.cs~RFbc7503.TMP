@@ -79,10 +79,9 @@ namespace Contacts.ContactorClass
                 adapter.Fill(ds);
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
-                    P_Statuses.Add(new P_Status(row));
+                    
                 }
             }
-            return P_Statuses;
         }
     }
 }

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <startup> 
+        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5.2" />
+    </startup>
+
+    <appSettings>
+      <add key="DataSource" value="2"/>
+      <add key="ConnStrings" value="data source=ITRD-51942\SQLEXPRESS;persist security info=False;initial catalog=Contact;User Id=usrid;Password=pswd"/>
+      <add key="UserID" value="1tnXFaNKnWrXCCJI7FyZGQ=="/>
+      <add key="Password" value="HPLQwa13XsK+yxs67rSpcA=="/>
+    </appSettings>
+</configuration>

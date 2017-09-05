@@ -71,10 +71,5 @@ namespace Contacts.ContactorClass
             }
             return CE;
         }
-
-        public List<P_Status> GetStatus()
-        {
-            return new List<P_Status>();
-        }
     }
 }
