@@ -20,11 +20,12 @@ namespace Contacts.ContactorClass
                 getter = new GetFromDB();
             else if (DataSource == "3")
                 getter = new GetFromRESTful();
-            Statuses = getter.GetStatus();
+            
         }
 
         public List<People> GetContact()
         {
+            Statuses = getter.GetStatus();
             return getter.GetContact();
         }
         
