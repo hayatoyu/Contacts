@@ -155,11 +155,12 @@ namespace Contacts.ContactorClass
                     // 查此人狀態
                     if(Statuses.Exists(s => s.EmployeeID == p.ID))
                     {
-                        string status = Statuses.Where(s => s.EmployeeID == p.ID
+                        
+                        var status = Statuses.Where(s => s.EmployeeID == p.ID
                                                  && s.StartTime <= DateTime.Now
-                                                 && s.EndTime >= DateTime.Now).FirstOrDefault().Status;
-                        if (!string.IsNullOrEmpty(status))
-                            stbr.Append(status + "\t");
+                                                 && s.EndTime >= DateTime.Now).FirstOrDefault();
+                        if(status != null)
+                            stbr.Append(status.Status + "\t");
                     }
 
                     stbr.AppendLine();
