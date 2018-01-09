@@ -120,7 +120,6 @@ namespace Contacts.ContactorClass
             catch (WebException ex)
             {
                 Console.WriteLine(ex.Message);
-                Console.WriteLine("連線異常，無法檢查資料庫最後更新時間...將以本地csv檔案進行讀取...");
             }
 
             if(SQLLastUpdateTime > fInfo.LastWriteTime)
@@ -162,17 +161,11 @@ namespace Contacts.ContactorClass
                         sw.WriteLine(stbr.ToString());
                         sw.Flush();
                     }
-                    Console.WriteLine("本地端檔案更新完成，即將啟動程式...");
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    Console.WriteLine("發生異常無法回寫本地端文件，請終止程式並將App.config檔案中之 DataSource 值切換至3，由遠端服務取得通訊錄");
                 }                
-            }
-            else
-            {
-                Console.WriteLine("檔案無需更新，即將啟動程式...");
             }
         }
     }

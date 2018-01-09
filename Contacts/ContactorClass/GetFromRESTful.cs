@@ -17,7 +17,7 @@ namespace Contacts.ContactorClass
         {
             Console.WriteLine("========== 正在向遠端請求資料 ==========");
             List<People> Contacts = new List<People>();
-            string url = "http://10.10.5.64:9999/HyperledgerFabric/RestfulTestServiceImpl.svc/Contact";
+            string url = "http://10.10.4.57:9999/HyperledgerFabric/RestfulTestServiceImpl.svc/Contact";
 
             try
             {
@@ -49,7 +49,7 @@ namespace Contacts.ContactorClass
         public List<P_Status> GetStatus()
         {
             List<P_Status> P_Statuses = new List<P_Status>();
-            string url = "http://10.10.5.64:9999/HyperledgerFabric/RestfulTestServiceImpl.svc/ContactStatus";
+            string url = "http://10.10.4.57:9999/HyperledgerFabric/RestfulTestServiceImpl.svc/ContactStatus";
 
             try
             {

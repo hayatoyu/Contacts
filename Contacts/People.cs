@@ -14,6 +14,6 @@ namespace Contacts
         public string Depart { get; set; }
         public string SpecialSys { get; set; }
         public string Notes { get; set; }
-
+        public DateTime LastUpdateTime { get; set; }
     }
 }
