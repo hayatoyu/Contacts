@@ -12,11 +12,11 @@ namespace Contacts.ContactorClass
 {
     class GetFromDB : ContactGetter
     {
-        public List<E_Extension> GetContact()
+        public List<People> GetContact()
         {
             string DataSource = ConfigurationManager.AppSettings["DataSource"];
-            
-            List<E_Extension> Contacts = new List<E_Extension>();
+            List<People> Contacts = new List<People>();
+            List<E_Extension> test = new List<E_Extension>();
             
             try
             {
@@ -64,20 +64,17 @@ namespace Contacts.ContactorClass
             return Contacts;
         }
 
-        public List<E_Status> GetStatus()
+        public List<P_Status> GetStatus()
         {
             string ConnString = ConfigurationManager.AppSettings["ConnStrings"];
             string UserID = ConfigurationManager.AppSettings["UserID"];
             string Password = ConfigurationManager.AppSettings["Password"];
-            List<E_Status> P_Statuses = new List<E_Status>();
+            List<P_Status> P_Statuses = new List<P_Status>();
 
             using (SqlConnection conn = new SqlConnection())
             {
                 ConnString = ConnString.Replace("usrid", AESEncoder.AESDecrptBase64(UserID)).Replace("pswd", AESEncoder.AESDecrptBase64(Password));
                 conn.ConnectionString = ConnString;
-
-                P_Statuses = conn.Query<E_Status>("select * from V_TodayStatus").ToList();
-                /*
                 conn.Open();
 
 
@@ -88,9 +85,8 @@ namespace Contacts.ContactorClass
                 adapter.Fill(ds);
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
-                    P_Statuses.Add(new E_Status(row));
+                    P_Statuses.Add(new P_Status(row));
                 }
-                */
             }
             return P_Statuses;
         }

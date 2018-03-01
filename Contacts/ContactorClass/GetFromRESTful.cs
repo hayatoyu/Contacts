@@ -13,10 +13,10 @@ namespace Contacts.ContactorClass
 {
     class GetFromRESTful : ContactGetter
     {
-        public List<People> GetContact()
+        public List<E_Extension> GetContact()
         {
             Console.WriteLine("========== 正在向遠端請求資料 ==========");
-            List<People> Contacts = new List<People>();
+            List<E_Extension> Contacts = new List<E_Extension>();
             string url = "http://10.10.4.57:9999/HyperledgerFabric/RestfulTestServiceImpl.svc/Contact";
 
             try
@@ -46,9 +46,9 @@ namespace Contacts.ContactorClass
             return Contacts;
         }
 
-        public List<P_Status> GetStatus()
+        public List<E_Status> GetStatus()
         {
-            List<P_Status> P_Statuses = new List<P_Status>();
+            List<E_Status> P_Statuses = new List<E_Status>();
             string url = "http://10.10.4.57:9999/HyperledgerFabric/RestfulTestServiceImpl.svc/ContactStatus";
 
             try
@@ -86,11 +86,11 @@ namespace Contacts.ContactorClass
     class GetContactResult
     {
         public string errMsg { get; set; }
-        public People[] list { get; set; }
+        public E_Extension[] list { get; set; }
     }
 
     class GetStatuses
     {
-        public P_Status[] Statuses { get; set; }
+        public E_Status[] Statuses { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace Contacts.ContactorClass
             
         }
 
-        public List<People> GetContact()
+        public List<E_Extension> GetContact()
         {
             Statuses = getter.GetStatus();
             return getter.GetContact();
@@ -88,9 +88,9 @@ namespace Contacts.ContactorClass
 
         }
 
-        private List<P_Status> Statuses = new List<P_Status>();
+        private List<E_Status> Statuses = new List<E_Status>();
 
-        public void DisplayDeparts(List<People> Contacts, string depart = "")
+        public void DisplayDeparts(List<E_Extension> Contacts, string depart = "")
         {
             StringBuilder stbr = new StringBuilder();
             // 全表列
@@ -133,7 +133,7 @@ namespace Contacts.ContactorClass
             }
         }
 
-        public void DisplayPeopleInfo(IEnumerable<People> query)
+        public void DisplayPeopleInfo(IEnumerable<E_Extension> query)
         {
             Console.Clear();
             Console.WriteLine();
@@ -144,7 +144,7 @@ namespace Contacts.ContactorClass
             }
             else
             {
-                foreach (People p in query)
+                foreach (E_Extension p in query)
                 {
                     stbr.Append(p.Name + "\t" + p.Extension + "\t" + p.Depart + "\t");
                     if (!string.IsNullOrEmpty(p.SpecialSys))

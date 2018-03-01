@@ -34,7 +34,7 @@ namespace Contacts
             Console.WriteLine(" ========== 歡迎使用資訊處通訊錄查詢系統 ==========");           
             Console.WriteLine();
 
-            List<People> Contacts = contactor.GetContact();
+            List<E_Extension> Contacts = contactor.GetContact();
             
 
             // 開始查詢輸出

@@ -13,9 +13,9 @@ namespace Contacts.ContactorClass
 {
     class GetFromCSV : ContactGetter
     {
-        public List<E_Extension> GetContact()
+        public List<People> GetContact()
         {
-            List<E_Extension> Contacts = new List<E_Extension>();
+            List<People> Contacts = new List<People>();
             Console.WriteLine("========== 正在讀取本地 csv 文件 ==========");
             string filepath = System.Environment.CurrentDirectory + @"\Contacts.csv";
 
@@ -33,7 +33,7 @@ namespace Contacts.ContactorClass
                         {
                             line = line.TrimEnd().Replace("\t", ",");
                             string[] contact = line.Split(',');
-                            E_Extension p = new E_Extension
+                            People p = new People
                             {
                                 Name = contact[0],
                                 Extension = contact[1],
@@ -79,9 +79,9 @@ namespace Contacts.ContactorClass
             return CE;
         }
 
-        public List<E_Status> GetStatus()
+        public List<P_Status> GetStatus()
         {
-            return new List<E_Status>();
+            return new List<P_Status>();
         }
 
         private void CheckLastUpdateTime(string filepath)
@@ -89,7 +89,7 @@ namespace Contacts.ContactorClass
             // 先檢查csv最後更新日期與資料庫中版本是否一致
             DateTime SQLLastUpdateTime = new DateTime();
             FileInfo fInfo = new FileInfo(filepath);
-            List<E_Extension> Contacts = new List<E_Extension>();
+            List<People> Contacts = new List<People>();
             Console.WriteLine("csv文件最後修改時間： {0}", fInfo.LastWriteTime);
             Console.WriteLine("正在檢查資料庫最後更新時間...");
             

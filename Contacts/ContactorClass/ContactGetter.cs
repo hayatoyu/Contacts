@@ -8,7 +8,7 @@ namespace Contacts.ContactorClass
 {
     interface ContactGetter
     {
-        List<People> GetContact();
-        List<P_Status> GetStatus();
+        List<E_Extension> GetContact();
+        List<E_Status> GetStatus();
     }
 }
