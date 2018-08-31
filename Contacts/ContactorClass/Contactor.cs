@@ -25,7 +25,7 @@ namespace Contacts.ContactorClass
 
         public List<E_Extension> GetContact()
         {
-            Statuses = getter.GetStatus();
+            //Statuses = getter.GetStatus();
             return getter.GetContact();
         }
         
