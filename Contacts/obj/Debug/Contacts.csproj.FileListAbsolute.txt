@@ -7,3 +7,21 @@ C:\Users\51942\Documents\Visual Studio 2017\Projects\Contacts\Contacts\bin\Debug
 C:\Users\51942\Documents\Visual Studio 2017\Projects\Contacts\Contacts\bin\Debug\Newtonsoft.Json.xml
 C:\Users\51942\Documents\Visual Studio 2017\Projects\Contacts\Contacts\obj\Debug\Contacts.exe
 C:\Users\51942\Documents\Visual Studio 2017\Projects\Contacts\Contacts\obj\Debug\Contacts.pdb
+C:\Users\51942\Source\Repos\Contacts\Contacts\bin\Debug\Contacts.exe.config
+C:\Users\51942\Source\Repos\Contacts\Contacts\bin\Debug\Contacts.exe
+C:\Users\51942\Source\Repos\Contacts\Contacts\bin\Debug\Contacts.pdb
+C:\Users\51942\Source\Repos\Contacts\Contacts\bin\Debug\Dapper.dll
+C:\Users\51942\Source\Repos\Contacts\Contacts\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\51942\Source\Repos\Contacts\Contacts\bin\Debug\Newtonsoft.Json.dll
+C:\Users\51942\Source\Repos\Contacts\Contacts\bin\Debug\NPOI.dll
+C:\Users\51942\Source\Repos\Contacts\Contacts\bin\Debug\NPOI.OOXML.dll
+C:\Users\51942\Source\Repos\Contacts\Contacts\bin\Debug\NPOI.OpenXml4Net.dll
+C:\Users\51942\Source\Repos\Contacts\Contacts\bin\Debug\NPOI.OpenXmlFormats.dll
+C:\Users\51942\Source\Repos\Contacts\Contacts\bin\Debug\Dapper.xml
+C:\Users\51942\Source\Repos\Contacts\Contacts\bin\Debug\Newtonsoft.Json.xml
+C:\Users\51942\Source\Repos\Contacts\Contacts\bin\Debug\NPOI.xml
+C:\Users\51942\Source\Repos\Contacts\Contacts\obj\Debug\Contacts.csprojAssemblyReference.cache
+C:\Users\51942\Source\Repos\Contacts\Contacts\obj\Debug\Contacts.csproj.CoreCompileInputs.cache
+C:\Users\51942\Source\Repos\Contacts\Contacts\obj\Debug\Contacts.csproj.CopyComplete
+C:\Users\51942\Source\Repos\Contacts\Contacts\obj\Debug\Contacts.exe
+C:\Users\51942\Source\Repos\Contacts\Contacts\obj\Debug\Contacts.pdb

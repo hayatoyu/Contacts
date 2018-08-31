@@ -29,28 +29,10 @@ namespace Contacts.ContactorClass
                     ConnString = ConnString.Replace("usrid", AESEncoder.AESDecrptBase64(UserID)).Replace("pswd", AESEncoder.AESDecrptBase64(Password));
                     conn.ConnectionString = ConnString;
 
-                    Contacts = conn.Query<E_Extension>("select * from T_Extension").ToList();
-                    /*
-                    conn.Open();
+                    //Contacts = conn.Query<E_Extension>("select * from T_Extension").ToList();
+                    Contacts = conn.Query<E_Extension>("usp_GetExtension_D", commandType: CommandType.StoredProcedure).ToList();
 
-                    // 查詢人員資料
-                    string query = "select * from T_Extension";
-                    SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-                    DataSet ds = new DataSet();
-                    adapter.Fill(ds);
-                    foreach (DataRow row in ds.Tables[0].Rows)
-                    {
-                        Contacts.Add(new People
-                        {
-                            ID = (int)row["ID"],
-                            Name = row["Name"].ToString(),
-                            Extension = row["Extension"].ToString(),
-                            Depart = row["Depart"].ToString(),
-                            SpecialSys = row["SpecialSys"] == null ? string.Empty : row["SpecialSys"].ToString(),
-                            Notes = row["Notes"] == null ? string.Empty : row["Notes"].ToString()
-                        });
-                    }
-                    */
+                    
                 }
                 Console.WriteLine("========== 讀取完成，請參考說明使用 ==========\n");
             }
@@ -77,20 +59,7 @@ namespace Contacts.ContactorClass
                 conn.ConnectionString = ConnString;
 
                 P_Statuses = conn.Query<E_Status>("select * from V_TodayStatus").ToList();
-                /*
-                conn.Open();
-
-
-                // 查詢狀態資料
-                DataSet ds = new DataSet();
-                string query = "select * from V_TodayStatus";
-                SqlDataAdapter adapter = new SqlDataAdapter(query,conn);
-                adapter.Fill(ds);
-                foreach (DataRow row in ds.Tables[0].Rows)
-                {
-                    P_Statuses.Add(new E_Status(row));
-                }
-                */
+                
             }
             return P_Statuses;
         }
